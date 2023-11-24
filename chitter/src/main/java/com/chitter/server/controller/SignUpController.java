@@ -18,11 +18,11 @@ public class SignUpController {
     UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<User> signUpUser(@RequestBody User newUser){
+    public ResponseEntity<String> signUpUser(@RequestBody User newUser){
 
         try {
             userRepository.save(new User(newUser.getUsername(), newUser.getName(), newUser.getEmail(), newUser.getPassword()));
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>("User successfully signed up", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

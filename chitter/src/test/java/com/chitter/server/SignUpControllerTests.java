@@ -36,7 +36,7 @@ public class SignUpControllerTests {
 
         when(userRepository.save(Mockito.any(User.class))).thenReturn(testUser);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testUser)))
-                .andExpect(status().isCreated())
+                .andExpect(content().string("User successfully signed up"))
                 .andDo(print());
 
     }
