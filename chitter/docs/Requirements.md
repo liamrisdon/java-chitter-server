@@ -36,7 +36,7 @@ so that users are able to sign in.
 
 #### Post "/signup" signUpUser
 - [/] Returns 201 status code and success message of successful signup
-- [ ] Returns error message when the email is already taken (400)
+- [/] Returns error message when the email is already taken (400)
 - [ ] Returns error message when the username is already taken (400)
 
 

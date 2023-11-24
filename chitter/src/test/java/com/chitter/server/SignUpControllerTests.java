@@ -66,4 +66,16 @@ public class SignUpControllerTests {
                 .andExpect(content().string("Email already linked to an account"))
                 .andDo(print());
     }
+
+    @Test
+    void shouldReturnErrorIfUsernameIsAlreadyTaken() throws Exception {
+
+        User testUsernameUser = new User("username", "testUsernameUser", "testusername@email.com", "testUsernamePassword");
+
+        when(userRepository.existingUsernameCheck(testUsernameUser.getUsername())).thenReturn(true);
+        mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testUsernameUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Username already linked to an account"))
+                .andDo(print());
+    }
 }
