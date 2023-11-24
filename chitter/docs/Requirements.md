@@ -26,7 +26,7 @@ so that users are able to sign in.
 
 #### Post "/" newPeep
 (Because of the way the front end is designed, the newPeep component is not displayed on the homepage unless the user is logged in, therefore do not need to test if user data is supplied, since jsx element will not be displayed if that is the case)
-- [ ] Returns 201 status code with new Peep when posted
+- [/] Returns 201 status code with new Peep when posted
 - [ ] Returns error message when there is no Peep content (204)
 
 #### Post "/login" loginUser

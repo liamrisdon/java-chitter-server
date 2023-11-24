@@ -66,4 +66,13 @@ public class PeepControllerTests {
                 .andExpect(status().isCreated())
                 .andDo(print());
     }
+
+    @Test
+    void shouldReturnErrorIfNoPeepContent() throws Exception {
+        Peep peep = new Peep("testUsername", "testname", null, "testDate");
+
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(peep)))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
 }

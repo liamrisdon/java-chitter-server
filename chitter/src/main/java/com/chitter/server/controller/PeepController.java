@@ -36,6 +36,9 @@ public class PeepController {
     @PostMapping
     public ResponseEntity<Peep> newPeep (@RequestBody Peep peep) {
         try {
+            if(peep.getContent() == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
             Peep _peep = peepRepository.save(new Peep(peep.getUsername(), peep.getName(), peep.getContent(), peep.getDateCreated()));
             return new ResponseEntity<>(_peep, HttpStatus.CREATED);
         } catch (Exception e) {
