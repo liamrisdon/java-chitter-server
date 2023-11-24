@@ -18,26 +18,25 @@ public class PeepController {
     PeepRepository peepRepository;
 
     @GetMapping
-    public ResponseEntity<List<Peep>> getAllPeeps() {
+    public ResponseEntity<?> getAllPeeps() {
         try {
             List<Peep> peeps = new ArrayList<Peep>();
             peepRepository.findAll().forEach(peeps::add);
 
             if(peeps.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("No Peeps found", HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(peeps, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.print("Exception message:" + e.toString());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Peep> newPeep (@RequestBody Peep peep) {
+    public ResponseEntity<?> newPeep (@RequestBody Peep peep) {
         try {
             if(peep.getContent() == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Error: no peep content", HttpStatus.BAD_REQUEST);
             }
             Peep _peep = peepRepository.save(new Peep(peep.getUsername(), peep.getName(), peep.getContent(), peep.getDateCreated()));
             return new ResponseEntity<>(_peep, HttpStatus.CREATED);

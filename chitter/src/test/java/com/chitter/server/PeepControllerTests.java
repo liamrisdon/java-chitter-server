@@ -54,6 +54,7 @@ public class PeepControllerTests {
         when(peepRepository.findAll()).thenReturn(peeps);
         mockMvc.perform(get("/"))
                 .andExpect(status().isNoContent())
+                .andExpect(content().string("No Peeps found"))
                 .andDo(print());
 
     }
@@ -73,6 +74,7 @@ public class PeepControllerTests {
 
         mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(peep)))
                 .andExpect(status().isBadRequest())
+                .andExpect(content().string("Error: no peep content"))
                 .andDo(print());
     }
 }
