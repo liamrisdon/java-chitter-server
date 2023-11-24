@@ -30,9 +30,9 @@ so that users are able to sign in.
 - [/] Returns error message when there is no Peep content (204)
 
 #### Post "/login" loginUser
-- [ ] Returns 200 status code and success message of successful login
-- [ ] Returns error message when there is an invalid password given (400)
-- [ ] Returns error message when there is an invalid username given (400)
+- [/] Returns 200 status code and success message of successful login
+- [/] Returns error message when there is an invalid password given (400)
+- [/] Returns error message when there is an invalid username given (400)
 
 #### Post "/signup" signUpUser
 - [/] Returns 201 status code and success message of successful signup

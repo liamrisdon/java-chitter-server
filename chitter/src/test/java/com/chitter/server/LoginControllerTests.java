@@ -53,4 +53,32 @@ public class LoginControllerTests {
                 .andExpect(content().string("User successfully logged in"))
                 .andDo(print());
     }
+
+    @Test
+    void shouldReturnErrorIfPasswordIsInvalid() throws Exception {
+
+        User loginUser = new User(existingTestUser.getUsername(), existingTestUser.getName(), existingTestUser.getEmail(), "incorrectPassword");
+
+        when(userRepository.findByUsername(existingTestUser.getUsername())).thenReturn(Optional.of(existingTestUser));
+        mockMvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(loginUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Unable to find login details"))
+                .andDo(print());
+
+    }
+
+    @Test
+    void shouldReturnErrorIfUsernameIsInvalid() throws Exception {
+
+        User loginUser = new User("incorrectUsername", existingTestUser.getName(), existingTestUser.getEmail(), existingTestUser.getPassword());
+
+        when(userRepository.findByUsername("incorrectUsername")).thenReturn(Optional.empty());
+        mockMvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(loginUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Unable to find login details"))
+                .andDo(print());
+
+    }
+
+
 }
