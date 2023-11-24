@@ -5,9 +5,7 @@ import com.chitter.server.repository.PeepRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +29,16 @@ public class PeepController {
             return new ResponseEntity<>(peeps, HttpStatus.OK);
         } catch (Exception e) {
             System.out.print("Exception message:" + e.toString());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Peep> newPeep (@RequestBody Peep peep) {
+        try {
+            Peep _peep = peepRepository.save(new Peep(peep.getUsername(), peep.getName(), peep.getContent(), peep.getDateCreated()));
+            return new ResponseEntity<>(_peep, HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
