@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.when;
@@ -55,5 +56,14 @@ public class PeepControllerTests {
                 .andExpect(status().isNoContent())
                 .andDo(print());
 
+    }
+
+    @Test
+    void shouldCreateNewPeep() throws Exception {
+        Peep peep = new Peep("testUsername", "testname", "This is a testPeep", "testDate");
+
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(peep)))
+                .andExpect(status().isCreated())
+                .andDo(print());
     }
 }

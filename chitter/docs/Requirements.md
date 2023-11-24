@@ -22,7 +22,7 @@ so that users are able to sign in.
 ## Testing Plan
 #### Get "/" allPeeps
 - [/] Returns all peeps with 200 status code
-- [ ] Returns no peeps message with 204 status code if there are no peeps in database
+- [/] Returns no peeps message with 204 status code if there are no peeps in database
 
 #### Post "/" newPeep
 (Because of the way the front end is designed, the newPeep component is not displayed on the homepage unless the user is logged in, therefore do not need to test if user data is supplied, since jsx element will not be displayed if that is the case)
@@ -49,3 +49,8 @@ so that users are able to sign in.
 | POST | '/signup' | create new user | req: { newUser: {user}} res: {message: "sign up successful}| { error } |
 
 ## Model for database
+
+
+## Further Scope for the Project
+- Implement Spring Security and JWT
+- Add functionality to edit and delete peeps
