@@ -8,3 +8,4 @@ Watched Spring Boot tutorial from DF trainer Ed Wright
 [https://www.bezkoder.com/spring-boot-webmvctest/](https://www.bezkoder.com/spring-boot-webmvctest/)
 [https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/](https://www.bezkoder.com/spring-boot-jwt-auth-mongodb/)
 [https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/](https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/)
+[https://junit.org/junit5/docs/5.0.2/api/org/junit/jupiter/api/package-summary.html](https://junit.org/junit5/docs/5.0.2/api/org/junit/jupiter/api/package-summary.html)

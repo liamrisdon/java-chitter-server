@@ -5,6 +5,8 @@ import com.chitter.server.model.User;
 import com.chitter.server.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,18 @@ public class SignUpControllerTests {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private User existingTestUser;
+
+    @BeforeEach
+    void init() {
+        existingTestUser = new User("username", "name", "existingtestuser@email.com", "password");
+    }
+
+    @AfterEach
+    void tearDown() {
+        existingTestUser = null;
+    }
+
     @Test
     void shouldSuccessfullySignUpUser() throws Exception {
         User testUser = new User("testUsername", "testUser", "test@email.com", "testpassword");
@@ -39,5 +53,17 @@ public class SignUpControllerTests {
                 .andExpect(content().string("User successfully signed up"))
                 .andDo(print());
 
+    }
+
+    @Test
+    void shouldReturnErrorIfEmailIsAlreadyTaken() throws Exception {
+
+        User testEmailUser = new User("testEmailUsername", "testEmailUser", "existingtestuser@email.com", "testEmailPassword");
+
+        when(userRepository.existingEmailCheck(testEmailUser.getEmail())).thenReturn(true);
+        mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testEmailUser)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Email already linked to an account"))
+                .andDo(print());
     }
 }
