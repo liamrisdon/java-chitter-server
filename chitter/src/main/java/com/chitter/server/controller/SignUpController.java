@@ -21,6 +21,9 @@ public class SignUpController {
     public ResponseEntity<String> signUpUser(@RequestBody User newUser){
 
         try {
+            if (userRepository.existingEmailCheck(newUser.getEmail())){
+                return new ResponseEntity<>("Email already linked to an account", HttpStatus.BAD_REQUEST);
+            }
             userRepository.save(new User(newUser.getUsername(), newUser.getName(), newUser.getEmail(), newUser.getPassword()));
             return new ResponseEntity<>("User successfully signed up", HttpStatus.CREATED);
         } catch (Exception e) {
