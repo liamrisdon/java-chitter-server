@@ -21,7 +21,7 @@ so that users are able to sign in.
 
 ## Testing Plan
 #### Get "/" allPeeps
-- [ ] Returns all peeps with 200 status code
+- [/] Returns all peeps with 200 status code
 - [ ] Returns no peeps message with 204 status code if there are no peeps in database
 
 #### Post "/" newPeep

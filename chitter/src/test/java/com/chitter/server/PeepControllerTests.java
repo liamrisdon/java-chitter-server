@@ -45,4 +45,15 @@ public class PeepControllerTests {
                 .andExpect(jsonPath("$.size()").value(peeps.size()))
                 .andDo(print());
     }
+
+    @Test
+    void shouldReturnNoContent() throws Exception {
+        List<Peep> peeps = new ArrayList<>();
+
+        when(peepRepository.findAll()).thenReturn(peeps);
+        mockMvc.perform(get("/"))
+                .andExpect(status().isNoContent())
+                .andDo(print());
+
+    }
 }

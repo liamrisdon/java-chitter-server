@@ -19,7 +19,7 @@ public class PeepController {
     @Autowired
     PeepRepository peepRepository;
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<Peep>> getAllPeeps() {
         try {
             List<Peep> peeps = new ArrayList<Peep>();
