@@ -60,7 +60,7 @@ public class SignUpControllerTests {
 
         User testEmailUser = new User("testEmailUsername", "testEmailUser", "existingtestuser@email.com", "testEmailPassword");
 
-        when(userRepository.existingEmailCheck(testEmailUser.getEmail())).thenReturn(true);
+        when(userRepository.existsByEmail(testEmailUser.getEmail())).thenReturn(true);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testEmailUser)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Email already linked to an account"))
@@ -72,7 +72,7 @@ public class SignUpControllerTests {
 
         User testUsernameUser = new User("username", "testUsernameUser", "testusername@email.com", "testUsernamePassword");
 
-        when(userRepository.existingUsernameCheck(testUsernameUser.getUsername())).thenReturn(true);
+        when(userRepository.existsByUsername(testUsernameUser.getUsername())).thenReturn(true);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testUsernameUser)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Username already linked to an account"))

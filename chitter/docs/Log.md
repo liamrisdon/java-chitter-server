@@ -20,3 +20,7 @@ Day 2 - 23/11/23
 On this day I detailed the requirements for the project and created a testing plan so that I could effectively implement TDD. I initialised and set up the project, but ran into an issue when trying to pass my first test. I had initialised my project with spring security, which I was unfamiliar with, and hoped to implement after basic functionality way added. However, this lead to a 401 status code (Unauthorized) to be return as I had not set up Spring Security correctly. This taught me to not be so eager, and only initialise and begin a project with what is actually needed, rather than making it more complicated than necessary - as there is always scope to build on it later.
 
 This cost me some time as I had to then set up a new project without Spring Security. But by the end of the day I had my first passing test, which tested a GET request to return all peeps.
+
+Day 3 - 24/11/23
+
+I was able to get the main functionality of the API written, developing using TDD and having all of my main unit test passed by the end of the day. However, what still needed to be done was structure the response entity so that the user could be returned for the frontend to then login/signup the user. Therefore, I would need to create classes to structure the res and reqs so that the API could talk to my Chitter frontend.
