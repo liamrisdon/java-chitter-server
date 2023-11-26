@@ -24,3 +24,9 @@ This cost me some time as I had to then set up a new project without Spring Secu
 Day 3 - 24/11/23
 
 I was able to get the main functionality of the API written, developing using TDD and having all of my main unit test passed by the end of the day. However, what still needed to be done was structure the response entity so that the user could be returned for the frontend to then login/signup the user. Therefore, I would need to create classes to structure the res and reqs so that the API could talk to my Chitter frontend.
+
+Day 4 - 25/11/23
+
+On this day I implement a responseHandler class to be able to return the user during login and sign up. This meant I had a working application, with both the frontend and backend working together and passing tests - fulfilling the minimal requirements I had set out.
+
+This meant I could move on to extending the scope of my project. I decided I would look to implement Spring Security and JWT to increase the security of my application, and potentially seek to add edit and deleting functionality at a later point. I would begin this the following day and create a new branch to work on the development of this.
