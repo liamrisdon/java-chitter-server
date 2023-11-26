@@ -48,9 +48,36 @@ so that users are able to sign in.
 | POST | '/login' | authenticate user | **req**: { username, password } **res**: { message, user} | { message: "Login failed" } |
 | POST | '/signup' | create new user | req: { newUser: {user}} res: {message: "sign up successful}| { error } |
 
-## Model for database
-
-
 ## Further Scope for the Project
 - Implement Spring Security and JWT
 - Add functionality to edit and delete peeps
+
+## Extended Requirements
+After a functioning application - the further scope for the project can be implemented. This will include adding Spring Security and JWT for authentication, and incorporating different roles so that there is an admin user who can act as a moderator and edit or delete peeps.
+This will be developed with BDD, as the existing unit tests should be able to test that the secured controller is working as MockMvc is automatically configured with the necessary filter chain.
+Additionally testing will be added for the addition of roles and update and delete functionalities as they are implemented.
+
+## Extended User Stories
+As the server ...
+```
+I want to have structured login and signup requests
+So that the validation and authentication can take place on these requests.
+
+I want to have my application utilise JWT on Reqs and Res
+So that secure authentication and authorization can take place.
+
+I want to allow for users to be stored as either user or admin
+So that I can allow for different types of users.
+
+I want to allow admin users to edit peeps,
+So that admins are able to moderate peep content.
+
+I want to allow admin users to delete peeps,
+So that admins are able to moderate peep content.
+
+I want to not allow users to edit or delete peeps,
+So that this functionality is reserved for admin users.
+
+```
+
+
