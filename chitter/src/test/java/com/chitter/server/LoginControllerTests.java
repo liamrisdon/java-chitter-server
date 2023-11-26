@@ -50,7 +50,11 @@ public class LoginControllerTests {
         when(userRepository.findByUsername(existingTestUser.getUsername())).thenReturn(Optional.of(existingTestUser));
         mockMvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(existingTestUser)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User successfully logged in"))
+                .andExpect(jsonPath("$.message").value("User successfully logged in"))
+                .andExpect(jsonPath("$.user.username").value(existingTestUser.getUsername()))
+                .andExpect(jsonPath("$.user.name").value(existingTestUser.getName()))
+                .andExpect(jsonPath("$.user.email").value(existingTestUser.getEmail()))
+                .andExpect(jsonPath("$.user.password").value(existingTestUser.getPassword()))
                 .andDo(print());
     }
 
@@ -62,7 +66,7 @@ public class LoginControllerTests {
         when(userRepository.findByUsername(existingTestUser.getUsername())).thenReturn(Optional.of(existingTestUser));
         mockMvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(loginUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Unable to find login details"))
+                .andExpect(jsonPath("$.message").value("Unable to find login details"))
                 .andDo(print());
 
     }
@@ -75,7 +79,7 @@ public class LoginControllerTests {
         when(userRepository.findByUsername("incorrectUsername")).thenReturn(Optional.empty());
         mockMvc.perform(post("/login").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(loginUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Unable to find login details"))
+                .andExpect(jsonPath("$.message").value("Unable to find login details"))
                 .andDo(print());
 
     }

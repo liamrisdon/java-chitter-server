@@ -50,7 +50,11 @@ public class SignUpControllerTests {
 
         when(userRepository.save(Mockito.any(User.class))).thenReturn(testUser);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testUser)))
-                .andExpect(content().string("User successfully signed up"))
+                .andExpect(jsonPath("$.message").value("Registration successful"))
+                .andExpect(jsonPath("$.user.username").value(testUser.getUsername()))
+                .andExpect(jsonPath("$.user.name").value(testUser.getName()))
+                .andExpect(jsonPath("$.user.email").value(testUser.getEmail()))
+                .andExpect(jsonPath("$.user.password").value(testUser.getPassword()))
                 .andDo(print());
 
     }
@@ -63,7 +67,7 @@ public class SignUpControllerTests {
         when(userRepository.existsByEmail(testEmailUser.getEmail())).thenReturn(true);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testEmailUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Email already linked to an account"))
+                .andExpect(jsonPath("$.message").value("Email already linked to an account"))
                 .andDo(print());
     }
 
@@ -75,7 +79,7 @@ public class SignUpControllerTests {
         when(userRepository.existsByUsername(testUsernameUser.getUsername())).thenReturn(true);
         mockMvc.perform(post("/signup").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(testUsernameUser)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("Username already linked to an account"))
+                .andExpect(jsonPath("$.message").value("Username already linked to an account"))
                 .andDo(print());
     }
 }
