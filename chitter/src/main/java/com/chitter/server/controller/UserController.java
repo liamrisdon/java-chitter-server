@@ -8,33 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/signup")
-public class SignUpController {
+@RequestMapping
+public class UserController {
 
     @Autowired
     UserRepository userRepository;
 
-//    @PostMapping
-//    public ResponseEntity<String> signUpUser(@RequestBody User newUser){
-//
-//        try {
-//            if (userRepository.existsByEmail(newUser.getEmail())){
-//                return new ResponseEntity<>("Email already linked to an account", HttpStatus.BAD_REQUEST);
-//            }
-//            if (userRepository.existsByUsername(newUser.getUsername())){
-//                return new ResponseEntity<>("Username already linked to an account", HttpStatus.BAD_REQUEST);
-//            }
-//            userRepository.save(new User(newUser.getUsername(), newUser.getName(), newUser.getEmail(), newUser.getPassword()));
-//            return new ResponseEntity<>("User successfully signed up", HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
-    @PostMapping
+    @PostMapping("signup")
     public ResponseEntity<Object> signUpUser(@RequestBody User newUser){
 
         try {
@@ -49,6 +33,26 @@ public class SignUpController {
             userRepository.save(new User(newUser.getUsername(), newUser.getName(), newUser.getEmail(), newUser.getPassword()));
 
             return ResponseHandler.generateResponse("Registration successful", HttpStatus.CREATED, newUser);
+
+        } catch (Exception e) {
+
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Object> loginUser(@RequestBody User user) {
+
+        try {
+
+            Optional<User> _user = userRepository.findByUsername(user.getUsername());
+
+            if (_user.isPresent() && user.getPassword().equals(_user.get().getPassword())) {
+                return ResponseHandler.generateResponse("User successfully logged in", HttpStatus.OK, _user);
+            }
+
+            return ResponseHandler.generateResponse("Unable to find login details", HttpStatus.BAD_REQUEST, null);
 
         } catch (Exception e) {
 
