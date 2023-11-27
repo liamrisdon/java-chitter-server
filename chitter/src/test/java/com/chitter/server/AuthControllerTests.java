@@ -1,6 +1,6 @@
 package com.chitter.server;
 
-import com.chitter.server.controller.UserController;
+import com.chitter.server.controller.AuthController;
 import com.chitter.server.model.User;
 import com.chitter.server.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,8 +21,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;;
 
-@WebMvcTest(UserController.class)
-public class UserControllerTests {
+@WebMvcTest(AuthController.class)
+public class AuthControllerTests {
 
     @MockBean
     private UserRepository userRepository;

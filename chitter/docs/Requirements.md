@@ -80,4 +80,14 @@ So that this functionality is reserved for admin users.
 
 ```
 
+#### Payloads
+- Requests:
+LoginRequest: { username, password }
+SignUpRequest: { username, name, email, password }
+
+- Responses:
+JwtResponse: {token, type, id, username, name, email, roles }
+MessageResponseL { message }
+
+
 
