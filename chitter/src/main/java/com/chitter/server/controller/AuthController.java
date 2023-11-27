@@ -49,29 +49,6 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<Object> signUpUser(@Valid @RequestBody SignUpRequest signUpRequest){
-//
-//        try {
-//            if (userRepository.existsByEmail(signUpRequest.getEmail())){
-//                return ResponseHandler.generateResponse("Email already linked to an account", HttpStatus.BAD_REQUEST, null);
-//            }
-//
-//            if (userRepository.existsByUsername(signUpRequest.getUsername())){
-//                return ResponseHandler.generateResponse("Username already linked to an account", HttpStatus.BAD_REQUEST, null);
-//            }
-//
-//            userRepository.save(new User(signUpRequest.getUsername(), signUpRequest.getName(), signUpRequest.getEmail(), signUpRequest.getPassword()));
-//
-//            return ResponseHandler.generateResponse("Registration successful", HttpStatus.CREATED, newUser);
-//
-//        } catch (Exception e) {
-//
-//            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-//
-//        }
-//    }
-
     // add message response
     @PostMapping("/signup")
     public ResponseEntity<Object> signUpUser(@Valid @RequestBody SignUpRequest signUpRequest){
@@ -89,20 +66,30 @@ public class AuthController {
             Set<String> strRoles = signUpRequest.getRoles();
             Set<Role> roles = new HashSet<>();
 
-            if(strRoles == null) {
+            if (strRoles == null || strRoles.isEmpty()) {
                 Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                        .orElseThrow(() -> new RuntimeException("Error: role not found"));
+                        .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                 roles.add(userRole);
             } else {
-                Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Error: role not found"));
-                roles.add(adminRole);
+                strRoles.forEach(role -> {
+                    Role roleToAdd;
+                    switch (role) {
+                        case "admin":
+                            roleToAdd = roleRepository.findByName(ERole.ROLE_ADMIN)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                            break;
+                        default:
+                            roleToAdd = roleRepository.findByName(ERole.ROLE_USER)
+                                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                    }
+                    roles.add(roleToAdd);
+                });
             }
 
-            user.setRoles(roles);
-            userRepository.save(user);
+                user.setRoles(roles);
+                userRepository.save(user);
 
-            return ResponseHandler.generateResponse("Registration successful", HttpStatus.CREATED, user);
+                return ResponseHandler.generateResponse("Registration successful", HttpStatus.CREATED, user);
 
         } catch (Exception e) {
 
@@ -110,26 +97,6 @@ public class AuthController {
 
         }
     }
-
-//    @PostMapping("/login")
-//    public ResponseEntity<Object> loginUser(@RequestBody User user) {
-//
-//        try {
-//
-//            Optional<User> _user = userRepository.findByUsername(user.getUsername());
-//
-//            if (_user.isPresent() && user.getPassword().equals(_user.get().getPassword())) {
-//                return ResponseHandler.generateResponse("User successfully logged in", HttpStatus.OK, _user);
-//            }
-//
-//            return ResponseHandler.generateResponse("Unable to find login details", HttpStatus.BAD_REQUEST, null);
-//
-//        } catch (Exception e) {
-//
-//            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
-//
-//        }
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<Object> loginUser(@Valid @RequestBody LoginRequest loginRequest) {

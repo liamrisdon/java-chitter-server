@@ -12,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins="*")
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/auth/")
 public class PeepController {
 
     @Autowired

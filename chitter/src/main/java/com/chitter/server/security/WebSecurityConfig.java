@@ -3,8 +3,8 @@ package com.chitter.server.security;
 
 import com.chitter.server.security.jwt.AuthEntryPointJwt;
 import com.chitter.server.security.jwt.AuthTokenFilter;
-import com.chitter.server.security.services.UserDetailsServiceImp;
 
+import com.chitter.server.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     @Autowired
-    UserDetailsServiceImp userDetailsService;
+    UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorisedHandler;
