@@ -6,6 +6,7 @@ import com.chitter.server.model.User;
 import com.chitter.server.payload.req.LoginRequest;
 import com.chitter.server.payload.req.SignUpRequest;
 import com.chitter.server.payload.res.JwtResponse;
+import com.chitter.server.payload.res.MessageResponse;
 import com.chitter.server.repository.RoleRepository;
 import com.chitter.server.repository.UserRepository;
 import com.chitter.server.response.ResponseHandler;
@@ -49,17 +50,16 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    // add message response
     @PostMapping("/signup")
     public ResponseEntity<Object> signUpUser(@Valid @RequestBody SignUpRequest signUpRequest){
 
         try {
             if (userRepository.existsByEmail(signUpRequest.getEmail())){
-                return ResponseHandler.generateResponse("Email already linked to an account", HttpStatus.BAD_REQUEST, null);
+                return ResponseEntity.badRequest().body(new MessageResponse("Email already linked to an account"));
             }
 
             if (userRepository.existsByUsername(signUpRequest.getUsername())){
-                return ResponseHandler.generateResponse("Username already linked to an account", HttpStatus.BAD_REQUEST, null);
+                return ResponseEntity.badRequest().body(new MessageResponse("Username already linked to an account"));
             }
 
             User user = new User(signUpRequest.getUsername(), signUpRequest.getName(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()));
@@ -89,11 +89,11 @@ public class AuthController {
                 user.setRoles(roles);
                 userRepository.save(user);
 
-                return ResponseHandler.generateResponse("Registration successful", HttpStatus.CREATED, user);
+                return ResponseEntity.ok(new MessageResponse("Registration successful"));
 
         } catch (Exception e) {
 
-            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
 
         }
     }
@@ -115,7 +115,7 @@ public class AuthController {
 
         } catch (Exception e) {
 
-            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.BAD_REQUEST, null);
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
 
         }
     }
